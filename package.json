@@ -1,0 +1,24 @@
+{
+  "name": "flux-stores",
+  "version": "0.0.1",
+  "description": "Flux stores inspired by Backbone models and collections ",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/ksnabb/flux-stores"
+  },
+  "keywords": [
+    "flux",
+    "reactjs",
+    "stores"
+  ],
+  "author": "Kristoffer Snabb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksnabb/flux-stores/issues"
+  },
+  "homepage": "https://github.com/ksnabb/flux-stores"
+}
