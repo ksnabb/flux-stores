@@ -1,8 +1,8 @@
 {
   "name": "flux-stores",
   "version": "0.0.1",
-  "description": "Flux stores inspired by Backbone models and collections ",
-  "main": "src/main.js",
+  "description": "Flux stores",
+  "main": "dist/flux-stores.js",
   "scripts": {
     "test": "gulp test"
   },
@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/ksnabb/flux-stores/issues"
   },
-  "homepage": "https://github.com/ksnabb/flux-stores"
+  "homepage": "https://github.com/ksnabb/flux-stores",
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "should": "^5.0.1"
+  }
 }
