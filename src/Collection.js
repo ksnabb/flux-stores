@@ -8,6 +8,9 @@ export class Collection extends EventEmitter {
       models.forEach( (mod) => this.models.set( mod[this.idAttribute], new Model(mod) ) );
     }
     this.length = this.models.size;
+    if(this.initialize) {
+      this.initialize.call(this, models);
+    }
   }
   
   add(objs) {
