@@ -18,4 +18,11 @@ export class Model extends EventEmitter {
     return this.arguments.get(key);
   }
   
+  toJSON() {
+    let obj = {};
+    for (let [key, value] of this.arguments) {
+      obj[key] = value;
+    }
+    return obj;
+  }
 }
