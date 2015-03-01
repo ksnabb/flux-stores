@@ -43,22 +43,24 @@ describe("Collection", function() {
       let jsObjs = collection.toJSON();
       _.isEqual(jsObjs, objs).should.be.true;
     });
+  });
 
-    it("should return sorter array of js objects when a comparator is added to the collection", function() {
-      function SortedCollection(objs) {
-        Collection.call(this, objs);
-      };
-      SortedCollection.prototype = Object.create(Collection.prototype);
-      SortedCollection.prototype.comparator = function(modelA, modelB) {
-        return modelA.get("hello").localeCompare(modelB.get("hello"));
-      };
-      SortedCollection.prototype.constructor = SortedCollection;
+  describe("comparator", function() {
+    
+    function SortedCollection(objs) {
+      Collection.call(this, objs);
+    };
+    SortedCollection.prototype = Object.create(Collection.prototype);
+    SortedCollection.prototype.comparator = function(modelA, modelB) {
+      return modelA.get("hello").localeCompare(modelB.get("hello"));
+    };
+    SortedCollection.prototype.constructor = SortedCollection;
+
+    it("should sort the returned js objects when added to a collection", function() {
       let col = new SortedCollection(objs),
         jsObjs = col.toJSON();
       jsObjs[0].hello.should.equal("something");
       jsObjs[1].hello.should.equal("world");
     });
-
   });
-
 });
