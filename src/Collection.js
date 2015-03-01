@@ -23,17 +23,17 @@ export class Collection extends EventEmitter {
     let models = [];
     this.models.forEach( (mod) => models.push(mod) )
     if(this.comparator) {
-      models.sort(comparator);
+      models.sort(this.comparator);
     }
     return models;
   }
   
   // pass in comparator to get objects in sorted order
-  toJSON(comparator) {
+  toJSON() {
     let models = this._getModels(),
         objs = [];
-    models.forEach( (mod) => objs.push(mod.toJSON()) )
-    return objs;
+    models.forEach( (mod) => objs.push(mod) )
+    return objs.map( (mod) => mod.toJSON() );
   }
 }
 

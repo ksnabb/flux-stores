@@ -6,12 +6,13 @@ var _ = require("underscore");
 describe("Collection", function() {
   // test data
   let objs = [{
-    "id": 1,
-    "hello": "world"
-  }, {
-    "id": 2,
-    "hello": "something"
-  }], collection;
+      "id": 1,
+      "hello": "world"
+    }, {
+      "id": 2,
+      "hello": "something"
+    }],
+    collection;
 
   beforeEach(function() {
     collection = new Collection();
@@ -42,6 +43,22 @@ describe("Collection", function() {
       let jsObjs = collection.toJSON();
       _.isEqual(jsObjs, objs).should.be.true;
     });
+
+    it("should return sorter array of js objects when a comparator is added to the collection", function() {
+      function SortedCollection(objs) {
+        Collection.call(this, objs);
+      };
+      SortedCollection.prototype = Object.create(Collection.prototype);
+      SortedCollection.prototype.comparator = function(modelA, modelB) {
+        return modelA.get("hello").localeCompare(modelB.get("hello"));
+      };
+      SortedCollection.prototype.constructor = SortedCollection;
+      let col = new SortedCollection(objs),
+        jsObjs = col.toJSON();
+      jsObjs[0].hello.should.equal("something");
+      jsObjs[1].hello.should.equal("world");
+    });
+
   });
 
 });
