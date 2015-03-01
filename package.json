@@ -1,6 +1,6 @@
 {
   "name": "flux-stores",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Flux stores",
   "main": "dist/flux-stores.js",
   "scripts": {
