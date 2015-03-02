@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "mocha",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
