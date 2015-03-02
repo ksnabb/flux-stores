@@ -2,9 +2,11 @@
   "name": "flux-stores",
   "version": "0.0.2",
   "description": "Flux stores",
-  "main": "dist/flux-stores.js",
+  "main": "dist/main.js",
   "scripts": {
-    "test": "mocha"
+    "build": "babel src --out-dir dist",
+    "test": "mocha",
+    "clean": "rm -rf dist"
   },
   "repository": {
     "type": "git",
@@ -22,8 +24,7 @@
   },
   "homepage": "https://github.com/ksnabb/flux-stores",
   "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-babel": "^4.0.0",
+    "babel": "^4.0.0",
     "mocha": "^2.1.0",
     "should": "^5.0.1",
     "underscore": "^1.8.2"
