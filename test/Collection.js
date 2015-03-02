@@ -1,6 +1,6 @@
 "use strict";
 var should = require("should");
-var Collection = require("../dist/Collection").Collection;
+var Collection = require("..").Collection;
 var _ = require("underscore");
 
 function createCollection(funName, fun) {

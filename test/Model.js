@@ -1,6 +1,6 @@
 "use strict";
 var should = require("should");
-var Model = require("../dist/Model").Model;
+var Model = require("..").Model;
 
 describe("Model", function() {
   
