@@ -16,8 +16,19 @@ export class Collection extends EventEmitter {
   }
   
   add(objs) {
-    objs.forEach( (obj) => this.models.set( obj[this.idAttribute], new Model(obj) ) );
+    let addedModels = [];
+    objs.forEach( (obj) => {
+      let oldModel = this.models.get( obj[this.idAttribute] );
+      if( oldModel ) {
+        oldModel.set(obj);
+      } else {
+        let newModel = new Model(obj); 
+        this.models.set( obj[this.idAttribute], newModel );
+        addedModels.push(newModel)
+      }
+    });
     this.length = this.models.size;
+    if(addedModels.length > 0) this.trigger("add", addedModels);
   }
 
   get(id) {

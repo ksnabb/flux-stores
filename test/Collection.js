@@ -61,11 +61,16 @@ describe("Collection", function() {
       collection.get(2).get("hello").should.equal("something");
     });
     
-    it("should trigger an add event with the added objects", function() {
+    it("should trigger an add event with the added objects", function(done) {
       collection.on("add", function(addedObjects) {
-        addedObjects.length.should.be.instanceof(Array).and.have.lengthOf(2);
+        addedObjects.should.be.instanceof(Array).and.have.lengthOf(2);
+        done();
       });
-      collection.add([{},{}]);
+      collection.add([{
+        "id": 1
+      },{
+        "id": 2
+      }]);
     });
   });
 
