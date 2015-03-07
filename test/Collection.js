@@ -60,6 +60,13 @@ describe("Collection", function() {
       collection.get(1).get("hello").should.equal("world");
       collection.get(2).get("hello").should.equal("something");
     });
+    
+    it("should trigger an add event with the added objects", function() {
+      collection.on("add", function(addedObjects) {
+        addedObjects.length.should.be.instanceof(Array).and.have.lengthOf(2);
+      });
+      collection.add([{},{}]);
+    });
   });
 
   describe("toJSON", function() {

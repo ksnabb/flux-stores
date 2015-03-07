@@ -2,6 +2,7 @@ import {EventEmitter} from "./EventEmitter";
 import {Model} from "./Model";
 
 export class Collection extends EventEmitter {
+  
   constructor(models) {
     this.models = new Map();
     if(models !== undefined) {
@@ -11,6 +12,7 @@ export class Collection extends EventEmitter {
     if(this.initialize) {
       this.initialize.call(this, models);
     }
+    super();
   }
   
   add(objs) {
