@@ -4,6 +4,6 @@ var Model = require("./Model");
 var Collection = require("./Collection");
 
 module.exports = {
-  Model: Model,
-  Collection: Collection
+  Model: Model.Model,
+  Collection: Collection.Collection
 };
