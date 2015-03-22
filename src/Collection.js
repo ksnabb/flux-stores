@@ -15,6 +15,14 @@ export class Collection extends EventEmitter {
     super();
   }
   
+  static extend(obj) {
+    class Child extends this {}
+    for(var funName in obj) {
+      Child.prototype[funName] = obj[funName];
+    }
+    return Child
+  }
+  
   add(objs) {
     let addedModels = [];
     objs.forEach( (obj) => {
