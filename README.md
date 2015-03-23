@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ksnabb/flux-stores.svg)](https://travis-ci.org/ksnabb/flux-stores)
+
 # Flux Stores
 
 This library provides FLUX stores.
