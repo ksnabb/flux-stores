@@ -38,6 +38,16 @@ export class Collection extends EventEmitter {
     this.length = this.models.size;
     if(addedModels.length > 0) this.trigger("add", addedModels);
   }
+  
+  filter(fun) {
+    let filteredModels = [];
+    this.models.forEach( (model) => {
+      if(fun(model)) {
+        filteredModels.push(model);
+      }
+    })
+    return filteredModels;
+  }
 
   get(id) {
     return this.models.get(id);
