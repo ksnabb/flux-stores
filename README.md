@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/ksnabb/flux-stores.svg)](https://travis-ci.org/ksnabb/flux-stores)
-
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ksnabb/flux-stores?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 # Flux Stores
 
 This library provides FLUX stores.
