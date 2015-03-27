@@ -24,8 +24,7 @@ You can also pass in an array of objects that will be set to the collection.
 var col = new Collection([{"id": 1},{"id": 2}])
 ```
 
-`filter(filterFunction)`
-
+`filter(filterFunction)`    
 Filter will return an array of models for which the filterFunction returns true.
 
 ```js
@@ -36,4 +35,14 @@ col.filter( (mod) => {
   }
   return false;
 }) --> [{"age": 29}]
+```
+
+`map(mapFunction)`   
+Map will return an array of models that has been passed through the mapFunction.
+
+```js
+var col = new Collection([{"age": 29},{"age": 31}]);
+col.map(function(model) {
+  return model.toJSON().age + 1;
+}) --> [{"age": 31},{"age": 32}]
 ```
