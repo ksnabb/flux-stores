@@ -112,6 +112,28 @@
       });
 
     });
+    
+    describe("map", function() {
+      
+      it("should return an array of models that has been modified by the passed in function", function() {
+        let col = new Collection([{
+          "id": 1,
+          "wage": 1
+        },{
+          "id": 2,
+          "wage": 2
+        },{
+          "id": 3,
+          "wage": 3
+        }]);
+        var res = col.map(function(model) {
+          return model.toJSON().wage * 10;
+        })
+        res.length.should.equal(3);
+        res[0].should.equal(10);
+      });
+      
+    });
 
   });
 })();
