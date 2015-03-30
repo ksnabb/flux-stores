@@ -10,6 +10,53 @@ This package is somewhat inspired by Backbone models and collections.
 
 ## Models
 
+Create a Model
+
+```js
+var m = new Model()
+```
+
+You can also pass in a js object that will be set as the values for the model.
+
+```js
+var m = new Model({
+  "id": "idofsomekind",
+  "age": 30
+});
+```
+
+To extend a Model use extend.
+
+```js
+var MyModel = Model.extend({
+  "initialize": function() {
+    console.log("this is me");
+  }
+});
+```
+
+To listen to changes to the model values use on.
+
+```js
+var m = new Model({
+  "age": 30
+});
+m.on("change", function(model) {
+  // do something with the new values
+});
+```
+
+You can also listen to specific properties on a model with on.
+
+```js
+var m = new Model({
+  "age": 30
+});
+m.on("change:age", function(model) {
+  // do something when age prop has changed
+});
+```
+
 ## Collection
 
 Create a collection
