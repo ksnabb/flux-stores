@@ -2,6 +2,7 @@
   "use strict";
   var should = require("should");
   var Collection = require("..").Collection;
+  var Model = require("..").Model;
   var _ = require("underscore");
 
   describe("Collection", function() {
@@ -16,6 +17,21 @@
         }]);
         col.length.should.equal(2);
       });
+      
+      it("should reflect model id changes to the collection keys", function() {
+        let m = new Model({
+          "id": "one",
+          "name": "micky"
+        });
+        let col = new Collection();
+        col.add(m);
+        col.get("one").get("name").should.equal("micky");
+        col.get("one").set({
+          "id": "two"
+        });
+        col.get("two").get("name").should.equal("micky");
+      });
+      
     });
 
     describe("initialize", function() {
@@ -50,6 +66,16 @@
         collection.length.should.equal(2);
         collection.get(1).get("hello").should.equal("world");
         collection.get(2).get("hello").should.equal("something");
+      });
+      
+      it("should add models as models to the collection", function() {
+        let m = new Model({
+          "id": "hello",
+          "name": "model"
+        });
+        let col = new Collection();
+        col.add(m);
+        col.get("hello").get("name").should.equal("model");
       });
 
       it("should trigger an add event with the added objects", function(done) {
