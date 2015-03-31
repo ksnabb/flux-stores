@@ -18,6 +18,7 @@ export class Collection extends EventEmitter {
     if (this.initialize) {
       this.initialize.call(this, models);
     }
+    this._nextId = 1;
     super();
   }
 
@@ -32,6 +33,10 @@ export class Collection extends EventEmitter {
   add(objs) {
     let addedModels = [];
     objs.forEach((obj) => {
+      if(obj[this.idAttribute] === undefined) {
+        obj[this.idAttribute] = "c" + this._nextId;
+        this._nextId++;
+      }
       let oldModel = this.models.get(obj[this.idAttribute]);
       if (oldModel) {
         oldModel.set(obj);
