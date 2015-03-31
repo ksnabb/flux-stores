@@ -64,6 +64,18 @@
           "id": 2
         }]);
       });
+
+      it("should assign default id to models without id", function() {
+        let col = new Collection();
+        col.add([
+          {"id": "one", "age": 12},
+          {"age": 14},
+          {"age": 30},
+          {"age": 35}
+        ]);
+        col.length.should.equal(4);
+      });
+
     });
 
     describe("toJSON", function() {
