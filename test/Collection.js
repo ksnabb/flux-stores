@@ -166,5 +166,27 @@
 
     });
 
+    describe("findWhere", function() {
+
+      it("should return the first objects found matching the attributes passed in", function() {
+        var col = new Collection([{
+          "id": 1,
+          "name": "mike"
+        },
+        {
+          "id": 2,
+          "name": "judge"
+        },
+        {
+          "id": 3,
+          "name": "mike"
+        }]);
+        var res = col.findWhere({"name": "mike"})
+        res.get("name").should.equal("mike");
+        res.get("id").should.equal(1);
+      });
+
+    });
+
   });
 })();

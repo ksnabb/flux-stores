@@ -96,6 +96,10 @@ export class Collection extends EventEmitter {
     return results;
   }
 
+  findWhere(attributes) {
+    return this.where(attributes)[0];
+  }
+
   get(id) {
     return this.models.get(id);
   }
