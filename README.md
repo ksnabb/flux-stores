@@ -92,3 +92,33 @@ col.map(function(model) {
   return model.toJSON().age + 1;
 }) --> [{"age": 31},{"age": 32}]
 ```
+
+`where(attributes)`
+Where will return the models that has equal attributes to the passed in attributes. 
+
+```js
+var col = new Collection([{"age": 29},{"age": 31}]);
+col.where({
+  "age": 31
+}) --> [{"age": 31}]
+```
+
+`findWhere(attributes)`
+The same as where but returns the first model matched
+
+```js
+var col = new Collection([{"age": 31, "id": 1},{"age": 31, "id": 2}]);
+col.where({
+  "age": 31
+}) --> [{"age": 31, "id": 1}]
+```
+
+`reset(models)`
+reset will replace all models in a collection with the passed in models. If no models are passed in it will just empty the collection.
+
+```js
+var col = new Collection([{"age": 31, "id": 1},{"age": 31, "id": 2}]);
+col.reset([{
+  "age": 31
+}]) --> [{"age": 31}]
+```
