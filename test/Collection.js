@@ -188,5 +188,49 @@
 
     });
 
+    describe("reset", function() {
+
+      it("should reset the collection so that the collection is empty when no models are passed in", function() {
+        var col = new Collection([{
+          "id": 1,
+          "name": "mike"
+        },
+        {
+          "id": 2,
+          "name": "judge"
+        },
+        {
+          "id": 3,
+          "name": "mike"
+        }]);
+        col.length.should.equal(3);
+        col.reset();
+        col.length.should.equal(0);
+      });
+
+      it("should replace the models in a collection with the passed in models", function() {
+        var col = new Collection([{
+          "id": 1,
+          "name": "mike"
+        },
+        {
+          "id": 2,
+          "name": "judge"
+        },
+        {
+          "id": 3,
+          "name": "mike"
+        }]);
+        col.length.should.equal(3);
+        col.reset([{
+          "id": "hello",
+          "name": "new"
+        }]);
+        col.length.should.equal(1);
+        col.get("hello").get("name").should.equal("new");
+      });
+      
+    });
+
   });
 })();

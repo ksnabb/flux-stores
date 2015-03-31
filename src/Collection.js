@@ -100,6 +100,14 @@ export class Collection extends EventEmitter {
     return this.where(attributes)[0];
   }
 
+  reset(models) {
+    this.models.clear();
+    this.length = 0;
+    if(models) {
+      this.add(models);
+    }
+  }
+
   get(id) {
     return this.models.get(id);
   }
