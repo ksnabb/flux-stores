@@ -135,5 +135,24 @@
       
     });
 
+
+    describe("where", function() {
+
+      it("should return an array of models that contains the passed in attributes", function() {
+        var col = new Collection([{
+          "id": 1,
+          "name": "mike"
+        },
+        {
+          "id": 2,
+          "name": "judge"
+        }]);
+        var res = col.where({"name": "mike"});
+        res.should.have.lengthOf(1);
+        res[0].get("id").should.equal(1);
+      });
+
+    });
+
   });
 })();
