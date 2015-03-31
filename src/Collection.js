@@ -66,6 +66,31 @@ export class Collection extends EventEmitter {
     return mapFunctions;
   }
 
+  where(attributes) {
+    let results = [];
+    for(let key in attributes) {
+      if(key === this.idAttribute) {
+        results.push(this.models.get(attributes[key]));
+        return results;
+      } else if (results.length === 0) {
+        for(let [modelId, model] of this.models) {
+          if(model.get(key) === attributes[key]) {
+            results.push(model);
+          }
+        }
+      } else {
+        let tempResults = [];
+        results.forEach( (model) => {
+          if(model.get(key) === attributes[key]) {
+            tempResults.push(model);
+          }
+        });
+        results = tempResults;
+      }
+    }
+    return results;
+  }
+
   get(id) {
     return this.models.get(id);
   }
