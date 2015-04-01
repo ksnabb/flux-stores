@@ -76,6 +76,9 @@ export class Collection extends EventEmitter {
         filteredModels.push(model);
       }
     })
+    if(this.comparator) {
+      filteredModels.sort(this.comparator);
+    }
     return filteredModels;
   }
 
