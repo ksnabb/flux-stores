@@ -19,6 +19,7 @@ export class Collection extends EventEmitter {
       this.initialize.call(this, models);
     }
     this._nextId = 1;
+    this._type = "Collection";
     super();
   }
 
@@ -30,22 +31,40 @@ export class Collection extends EventEmitter {
     return Child
   }
 
+  _add(model) {
+    this.models.set(model.get(this.idAttribute), model);
+    // listen to id changes in model
+    model.on("change:id", (m, oldValue) => {
+      this.models.delete(oldValue);
+      this.models.set(m.get(this.idAttribute), m);
+    })
+  }
+  
   add(objs) {
     let addedModels = [];
-    objs.forEach((obj) => {
-      if(obj[this.idAttribute] === undefined) {
-        obj[this.idAttribute] = "c" + this._nextId;
-        this._nextId++;
-      }
-      let oldModel = this.models.get(obj[this.idAttribute]);
-      if (oldModel) {
-        oldModel.set(obj);
-      } else {
-        let newModel = new Model(obj);
-        this.models.set(obj[this.idAttribute], newModel);
-        addedModels.push(newModel)
-      }
-    });
+    if(objs.constructor === Array) {
+      objs.forEach((obj) => {
+        if(obj[this.idAttribute] === undefined) {
+          obj[this.idAttribute] = "c" + this._nextId;
+          this._nextId++;
+        }
+        let oldModel = this.models.get(obj[this.idAttribute]);
+        if (oldModel) {
+          oldModel.set(obj);
+        } else {
+          let newModel = new Model(obj);
+          this._add(newModel);
+          addedModels.push(newModel);
+        }
+      });
+    } else if (objs._type === "Model") {
+      this._add(objs);
+      addedModels.push(objs);
+    } else {
+      let newModel = new Model(objs);
+      this._add(newModel);
+      addedModels.push(newModel);
+    }
     this.length = this.models.size;
     if (addedModels.length > 0) this.trigger("add", addedModels);
   }

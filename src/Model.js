@@ -4,6 +4,7 @@ import {
 from "./EventEmitter";
 
 export class Model extends EventEmitter {
+  
   constructor(obj = {}) {
     this.arguments = new Map();
 
@@ -20,6 +21,8 @@ export class Model extends EventEmitter {
     this.set(obj, {
       "silent": true
     });
+    
+    this._type = "Model";
     super();
   }
 
@@ -35,19 +38,21 @@ export class Model extends EventEmitter {
     "silent": false
   }) {
     let hasChanged = false;
+    let oldValues = {};
     for (let key in values) {
       let newValue = values[key],
         oldValue = this.arguments.get(key);
       if (newValue !== oldValue && values.hasOwnProperty(key)) {
+        oldValues[key] = newValue;
         this.arguments.set(key, newValue);
         if (!options.silent) {
-          this.trigger(`change:${key}`, this);
+          this.trigger(`change:${key}`, this, oldValue);
         }
         hasChanged = true;
       }
     }
     if (!options.silent && hasChanged) {
-      this.trigger("change", this);
+      this.trigger("change", this, oldValues);
     }
   }
 
