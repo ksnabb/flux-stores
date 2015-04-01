@@ -164,6 +164,25 @@
         res[0].get("id").should.equal(1);
       });
 
+      it("should return the results in sorted order according to a comparator", function() {
+        var SortedCollection = Collection.extend({
+          idAttribute: "age",
+          comparator: function(a, b) {
+            return b.get("age") - a.get("age");
+          }
+        });
+        var col = new SortedCollection([
+          {"age": 4, "name": "mike"},
+          {"age": 5, "name": "mike"},
+          {"age": 3, "name": "nomike"}
+          ]);
+        var res = col.where({
+          "name": "mike"
+        });
+        res[0].get("age").should.equal(5);
+        res[1].get("age").should.equal(4);
+      });
+
     });
 
     describe("findWhere", function() {
