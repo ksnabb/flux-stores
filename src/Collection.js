@@ -112,6 +112,9 @@ export class Collection extends EventEmitter {
         results = tempResults;
       }
     }
+    if(this.comparator) {
+      results.sort(this.comparator);
+    }
     return results;
   }
 
