@@ -21,7 +21,7 @@ export class EventEmitter {
   trigger(eventType, ...args) {
     let listeners = this.listeners.get(eventType);
     if(listeners) {
-      listeners.forEach(fun => fun.apply(this, args));
+      listeners.forEach( (fun) => fun.apply(this, args) );
     }
   }
 }
