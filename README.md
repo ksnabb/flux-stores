@@ -7,6 +7,22 @@ This library provides FLUX stores.
 
 This package is somewhat inspired by Backbone models and collections.
 
+### Installation
+
+To install simply run
+
+```sh
+npm install flux-stores --save
+```
+
+Then in your node / browserifyable code do:
+
+```js
+var fluxStores = require("flux-stores");
+var Model = fluxStores.Model;
+var Collection = fluxStores.Collection;
+```
+
 ## Models
 
 Create a Model
