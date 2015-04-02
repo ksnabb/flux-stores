@@ -3,9 +3,10 @@
 
 # Flux Stores
 
-This library provides FLUX stores.
+This library provides FLUX stores and is somewhat inspired by Backbone models and collections.
 
-This package is somewhat inspired by Backbone models and collections.
+The library itself is written in es6 and compiled with babel which means you might have to 
+include babel polyfill in your code to make it work in some browsers.
 
 ## Models
 
