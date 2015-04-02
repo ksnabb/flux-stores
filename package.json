@@ -6,6 +6,7 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "mocha",
+    "cover": "istanbul cover _mocha",
     "clean": "rm -rf dist",
     "prepublish": "npm run build"
   },
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/ksnabb/flux-stores",
   "devDependencies": {
     "babel": "^4.7.16",
+    "istanbul": "^0.3.13",
     "mocha": "^2.1.0",
     "should": "^5.0.1",
     "sinon": "^1.14.1",
