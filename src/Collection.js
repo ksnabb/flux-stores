@@ -75,7 +75,7 @@ export class Collection extends EventEmitter {
       if (fun(model)) {
         filteredModels.push(model);
       }
-    })
+    });
     if(this.comparator) {
       filteredModels.sort(this.comparator);
     }
@@ -83,14 +83,23 @@ export class Collection extends EventEmitter {
   }
 
   map(fun) {
-    let mapFunctions = [];
+    let mappedValues = [];
     let iter = this.models.values();
     let next = iter.next();
     while (!next.done) {
-      mapFunctions.push(fun(next.value))
+      mappedValues.push(fun(next.value));
       next = iter.next();
     }
-    return mapFunctions;
+    return mappedValues;
+  }
+  
+  each(fun) {
+    let iter = this.models.values();
+    let next = iter.next();
+    while (!next.done) {
+      fun(next.value);
+      next = iter.next();
+    }
   }
 
   where(attributes) {

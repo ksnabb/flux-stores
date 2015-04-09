@@ -17,7 +17,7 @@
         }]);
         col.length.should.equal(2);
       });
-      
+
       it("should reflect model id changes to the collection keys", function() {
         let m = new Model({
           "id": "one",
@@ -31,7 +31,7 @@
         });
         col.get("two").get("name").should.equal("micky");
       });
-      
+
     });
 
     describe("initialize", function() {
@@ -67,7 +67,7 @@
         collection.get(1).get("hello").should.equal("world");
         collection.get(2).get("hello").should.equal("something");
       });
-      
+
       it("should add models as models to the collection", function() {
         let m = new Model({
           "id": "hello",
@@ -93,12 +93,16 @@
 
       it("should assign default id to models without id", function() {
         let col = new Collection();
-        col.add([
-          {"id": "one", "age": 12},
-          {"age": 14},
-          {"age": 30},
-          {"age": 35}
-        ]);
+        col.add([{
+          "id": "one",
+          "age": 12
+        }, {
+          "age": 14
+        }, {
+          "age": 30
+        }, {
+          "age": 35
+        }]);
         col.length.should.equal(4);
       });
 
@@ -108,7 +112,11 @@
 
       it("should return js objects of all the containing models", function() {
         let collection = new Collection();
-        let objs = [{"id": 1}, {"id": 2}];
+        let objs = [{
+          "id": 1
+        }, {
+          "id": 2
+        }];
         collection.add(objs);
         let jsObjs = collection.toJSON();
         _.isEqual(jsObjs, objs).should.be.true;
@@ -122,7 +130,13 @@
             return modelA.get("hello").localeCompare(modelB.get("hello"));
           }
         });
-        let objs = [{"id": 1, "hello": "something"}, {"id": 2, "hello": "world"}];
+        let objs = [{
+          "id": 1,
+          "hello": "something"
+        }, {
+          "id": 2,
+          "hello": "world"
+        }];
         let col = new SortedCollection(objs),
           jsObjs = col.toJSON();
         jsObjs[0].hello.should.equal("something");
@@ -156,11 +170,16 @@
             return b.get("age") - a.get("age");
           }
         });
-        var col = new SortedCollection([
-          {"age": 4, "name": "mike"},
-          {"age": 5, "name": "mike"},
-          {"age": 3, "name": "nomike"}
-          ]);
+        var col = new SortedCollection([{
+          "age": 4,
+          "name": "mike"
+        }, {
+          "age": 5,
+          "name": "mike"
+        }, {
+          "age": 3,
+          "name": "nomike"
+        }]);
         var res = col.filter(
           function(m) {
             return m.get("name") === "mike";
@@ -170,27 +189,48 @@
         res[1].get("age").should.equal(4);
       });
     });
-    
+
     describe("map", function() {
-      
+
       it("should return an array of models that has been modified by the passed in function", function() {
         let col = new Collection([{
           "id": 1,
           "wage": 1
-        },{
+        }, {
           "id": 2,
           "wage": 2
-        },{
+        }, {
+          "id": 3,
+          "wage": 3
+        }]);
+        var wages = [];
+        var res = col.each(function(model) {
+          wages.push(model.toJSON().wage);
+        });
+        wages.should.have.lengthOf(3);
+        wages.should.containDeep([1,2,3]);
+      });
+
+    });
+
+    describe("each", function() {
+
+      it("should call the passed in function for each value in the collection", function() {
+        let col = new Collection([{
+          "id": 1,
+          "wage": 1
+        }, {
+          "id": 2,
+          "wage": 2
+        }, {
           "id": 3,
           "wage": 3
         }]);
         var res = col.map(function(model) {
           return model.toJSON().wage * 10;
-        })
-        res.length.should.equal(3);
-        res[0].should.equal(10);
+        });
       });
-      
+
     });
 
 
@@ -200,12 +240,13 @@
         var col = new Collection([{
           "id": 1,
           "name": "mike"
-        },
-        {
+        }, {
           "id": 2,
           "name": "judge"
         }]);
-        var res = col.where({"name": "mike"});
+        var res = col.where({
+          "name": "mike"
+        });
         res.should.have.lengthOf(1);
         res[0].get("id").should.equal(1);
       });
@@ -217,11 +258,16 @@
             return b.get("age") - a.get("age");
           }
         });
-        var col = new SortedCollection([
-          {"age": 4, "name": "mike"},
-          {"age": 5, "name": "mike"},
-          {"age": 3, "name": "nomike"}
-          ]);
+        var col = new SortedCollection([{
+          "age": 4,
+          "name": "mike"
+        }, {
+          "age": 5,
+          "name": "mike"
+        }, {
+          "age": 3,
+          "name": "nomike"
+        }]);
         var res = col.where({
           "name": "mike"
         });
@@ -237,16 +283,16 @@
         var col = new Collection([{
           "id": 1,
           "name": "mike"
-        },
-        {
+        }, {
           "id": 2,
           "name": "judge"
-        },
-        {
+        }, {
           "id": 3,
           "name": "mike"
         }]);
-        var res = col.findWhere({"name": "mike"})
+        var res = col.findWhere({
+          "name": "mike"
+        })
         res.get("name").should.equal("mike");
         res.get("id").should.equal(1);
       });
@@ -259,12 +305,10 @@
         var col = new Collection([{
           "id": 1,
           "name": "mike"
-        },
-        {
+        }, {
           "id": 2,
           "name": "judge"
-        },
-        {
+        }, {
           "id": 3,
           "name": "mike"
         }]);
@@ -277,12 +321,10 @@
         var col = new Collection([{
           "id": 1,
           "name": "mike"
-        },
-        {
+        }, {
           "id": 2,
           "name": "judge"
-        },
-        {
+        }, {
           "id": 3,
           "name": "mike"
         }]);
@@ -294,7 +336,7 @@
         col.length.should.equal(1);
         col.get("hello").get("name").should.equal("new");
       });
-      
+
     });
 
   });
