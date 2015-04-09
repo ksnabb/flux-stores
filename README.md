@@ -110,6 +110,16 @@ col.map(function(model) {
 }) --> [{"age": 31},{"age": 32}]
 ```
 
+`each(fun)`
+Will apply the function 'fun' on all containing models.
+
+```js
+var col = new Collection([{"age": 29},{"age": 31}]);
+col.each(function(model) {
+  model.set({"age": 1})
+}) --> [{"age": 1},{"age": 1}]
+```
+
 `where(attributes)`
 Where will return the models that has equal attributes to the passed in attributes. 
 
