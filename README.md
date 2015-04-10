@@ -41,6 +41,28 @@ var m = new Model({
 });
 ```
 
+`set(obj)`
+set the values to the model that are passed in the obj. Each value changed will trigger a change event.
+
+```js
+var m = new Model({
+  "age": 30
+});
+m.set({
+  "age": 31
+}); --> {"age": 31}
+```
+
+`get(attrKey)`
+get value for attribute by passing the key.
+
+```js
+var m = new Model({
+  "age": 24
+});
+m.get("age") --> 24
+```
+
 `extend(extensionObject)`
 To extend a Model use extend.
 
@@ -72,17 +94,6 @@ var m = new Model({
 m.on("change:age", function(model) {
   // do something when age prop has changed
 });
-```
-`set(obj)`
-set the values to the model that are passed in the obj. Each value changed will trigger a change event.
-
-```js
-var m = new Model({
-  "age": 30
-});
-m.set({
-  "age": 31
-}); --> {"age": 31}
 ```
 
 `clear()`
