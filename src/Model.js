@@ -59,6 +59,10 @@ export class Model extends EventEmitter {
   get(key) {
     return this.arguments.get(key);
   }
+  
+  clear() {
+    this.arguments.clear();
+  }
 
   toJSON() {
     let obj = {};
