@@ -28,18 +28,26 @@ export class Collection extends EventEmitter {
     for (var funName in obj) {
       Child.prototype[funName] = obj[funName];
     }
-    return Child
+    return Child;
   }
 
   _add(model) {
-    this.models.set(model.get(this.idAttribute), model);
-    // listen to id changes in model
-    model.on("change:id", (m, oldValue) => {
-      this.models.delete(oldValue);
-      this.models.set(m.get(this.idAttribute), m);
-    })
+    let oldModel = this.models.get(model.get(this.idAttribute));
+    if(oldModel) {
+      oldModel.set(model.toJSON());
+      return false;
+    } else {
+      this.models.set(model.get(this.idAttribute), model);
+
+      // listen to id changes in model to sync it with collection id
+      model.on("change:id", (m, oldValue) => {
+        this.models.delete(oldValue);
+        this.models.set(m.get(this.idAttribute), m);
+      });
+      return true;
+    }
   }
-  
+
   add(objs) {
     let addedModels = [];
     if(objs.constructor === Array) {
@@ -48,22 +56,14 @@ export class Collection extends EventEmitter {
           obj[this.idAttribute] = "c" + this._nextId;
           this._nextId++;
         }
-        let oldModel = this.models.get(obj[this.idAttribute]);
-        if (oldModel) {
-          oldModel.set(obj);
-        } else {
-          let newModel = new Model(obj);
-          this._add(newModel);
-          addedModels.push(newModel);
-        }
+        let newModel = new Model(obj);
+        if(this._add(newModel)) addedModels.push(newModel);
       });
     } else if (objs._type === "Model") {
-      this._add(objs);
-      addedModels.push(objs);
+      if(this._add(objs)) addedModels.push(objs);
     } else {
       let newModel = new Model(objs);
-      this._add(newModel);
-      addedModels.push(newModel);
+      if(this._add(newModel)) addedModels.push(newModel);
     }
     this.length = this.models.size;
     if (addedModels.length > 0) this.trigger("add", addedModels);
@@ -92,7 +92,7 @@ export class Collection extends EventEmitter {
     }
     return mappedValues;
   }
-  
+
   each(fun) {
     let iter = this.models.values();
     let next = iter.next();

@@ -68,7 +68,7 @@
         collection.get(2).get("hello").should.equal("something");
       });
 
-      it("should add models as models to the collection", function() {
+      it("should add models as Model instances to the collection", function() {
         let m = new Model({
           "id": "hello",
           "name": "model"
@@ -76,6 +76,23 @@
         let col = new Collection();
         col.add(m);
         col.get("hello").get("name").should.equal("model");
+      });
+
+      it("should merge if a model with the same id is already found in the collection", function() {
+        let m1 = new Model({
+          "id": "hello",
+          "name": "model"
+        });
+        let m2 = new Model({
+          "id": "hello",
+          "age": 30
+        });
+        let col = new Collection();
+        col.add(m1);
+        col.add(m2);
+        col.get("hello").get("name").should.equal("model");
+        col.get("hello").get("age").should.equal(30);
+        col.length.should.equal(1);
       });
 
       it("should trigger an add event with the added objects", function(done) {
