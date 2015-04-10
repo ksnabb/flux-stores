@@ -22,6 +22,8 @@ export class Model extends EventEmitter {
       "silent": true
     });
     
+    if(this.initialize) this.initialize();
+    
     this._type = "Model";
     super();
   }
@@ -31,7 +33,7 @@ export class Model extends EventEmitter {
     for (var funName in obj) {
       Child.prototype[funName] = obj[funName];
     }
-    return Child
+    return Child;
   }
 
   set(values, options = {

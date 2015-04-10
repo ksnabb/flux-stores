@@ -81,6 +81,18 @@
       valueSpy.callCount.should.equal(1);
       value2Spy.callCount.should.equal(1);
     });
+    
+    describe("initialize", function() {
+      
+      it("should be called on model creation if it exists", function() {
+        var spy = sinon.spy();
+        var M = Model.extend({
+          "initialize": spy
+        });
+        var m = new M();
+        spy.callCount.should.equal(1);
+      });
+    });
 
     describe("clear", function() {
 
