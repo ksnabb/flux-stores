@@ -5,7 +5,7 @@
 
 This library provides FLUX stores and is somewhat inspired by Backbone models and collections.
 
-The library itself is written in es6 and compiled with babel which means you might have to 
+The library itself is written in es6 and compiled with babel which means you might have to
 include babel polyfill in your code to make it work in some browsers.
 
 ### Installation
@@ -87,7 +87,32 @@ You can also pass in an array of objects that will be set to the collection.
 var col = new Collection([{"id": 1},{"id": 2}])
 ```
 
-`filter(filterFunction)`    
+`add(objs) `
+add function adds the passed in js objects to the collection. If a
+model in the collection already contains another model with the same id they
+will be merged.
+
+```js
+col.add([{"hello": "me", "id": 1}, {"hello": "you", "id": 2}, {"hello": "me again", "id": 1}]);
+col.length --> 2
+```
+
+`add(obj)`
+Also single js objects can be added.
+
+```js
+col.add({"hello": "I am single", "id": 123});
+```
+
+`add(model)`
+fluxStore models can also be added.
+
+```js
+let m = new Model({"hello": "I am model", "id": 1});
+col.add(m);
+```
+
+`filter(filterFunction)`
 Filter will return an array of models for which the filterFunction returns true.
 
 ```js
@@ -100,7 +125,7 @@ col.filter( (mod) => {
 }) --> [{"age": 29}]
 ```
 
-`map(mapFunction)`   
+`map(mapFunction)`
 Map will return an array of models that has been passed through the mapFunction.
 
 ```js
@@ -121,7 +146,7 @@ col.each(function(model) {
 ```
 
 `where(attributes)`
-Where will return the models that has equal attributes to the passed in attributes. 
+Where will return the models that has equal attributes to the passed in attributes.
 
 ```js
 var col = new Collection([{"age": 29},{"age": 31}]);
