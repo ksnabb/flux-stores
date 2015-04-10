@@ -41,6 +41,7 @@ var m = new Model({
 });
 ```
 
+`extend(extensionObject)`
 To extend a Model use extend.
 
 ```js
@@ -50,8 +51,8 @@ var MyModel = Model.extend({
   }
 });
 ```
-
-To listen to changes to the model values use on.
+`on(eventName, fun)`
+Listen to events on the model with on.
 
 ```js
 var m = new Model({
@@ -61,7 +62,7 @@ m.on("change", function(model) {
   // do something with the new values
 });
 ```
-
+`on(eventName:property, fun)`
 You can also listen to specific properties on a model with on.
 
 ```js
@@ -71,6 +72,27 @@ var m = new Model({
 m.on("change:age", function(model) {
   // do something when age prop has changed
 });
+```
+`set(obj)`
+set the values to the model that are passed in the obj. Each value changed will trigger a change event.
+
+```js
+var m = new Model({
+  "age": 30
+});
+m.set({
+  "age": 31
+}); --> {"age": 31}
+```
+
+`clear()`
+will clear the model and leave it empty.
+
+```js
+var m = new Model({
+  "just": "good"
+});
+m.clear() --> {}
 ```
 
 ## Collection

@@ -18,7 +18,7 @@
     it("should have an extend function to help creating subclasses of the Model", function() {
       var Child = Model.extend({
         "hello": function() {
-          return "world"
+          return "world";
         }
       });
       var child = new Child();
@@ -80,6 +80,17 @@
       });
       valueSpy.callCount.should.equal(1);
       value2Spy.callCount.should.equal(1);
+    });
+
+    describe("clear", function() {
+
+      it("should clear all values from the model", function() {
+        var m = new Model({
+          "age": "very young"
+        });
+        m.clear();
+        m.toJSON().should.be.empty;
+      });
     });
 
   });
