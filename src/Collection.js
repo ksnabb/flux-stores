@@ -10,10 +10,12 @@ from "./Model";
 export class Collection extends EventEmitter {
 
   constructor(models) {
+    if(this.Model === undefined) this.Model = Model;
+    
     this.models = new Map();
     if (models !== undefined) {
       models.forEach((mod) => {
-        let newModel = new Model(mod);
+        let newModel = new this.Model(mod);
         this.models.set(newModel.id, newModel);
       });
     }
@@ -21,7 +23,6 @@ export class Collection extends EventEmitter {
     if (this.initialize) {
       this.initialize.call(this, models);
     }
-    if(this.Model === undefined) this.Model = Model;
     this._nextId = 1;
     this._type = "Collection";
     super();
@@ -56,13 +57,13 @@ export class Collection extends EventEmitter {
     let addedModels = [];
     if(objs.constructor === Array) {
       objs.forEach((obj) => {
-        let newModel = new Model(obj);
+        let newModel = new this.Model(obj);
         if(this._add(newModel)) addedModels.push(newModel);
       });
     } else if (objs._type === "Model") {
       if(this._add(objs)) addedModels.push(objs);
     } else {
-      let newModel = new Model(objs);
+      let newModel = new this.Model(objs);
       if(this._add(newModel)) addedModels.push(newModel);
     }
     this.length = this.models.size;
@@ -148,7 +149,7 @@ export class Collection extends EventEmitter {
 
   _getModels() {
     let models = [];
-    this.models.forEach((mod) => models.push(mod))
+    this.models.forEach((mod) => models.push(mod));
     if (this.comparator) {
       models.sort(this.comparator);
     }
@@ -159,7 +160,7 @@ export class Collection extends EventEmitter {
   toJSON() {
     let models = this._getModels(),
       objs = [];
-    models.forEach((mod) => objs.push(mod))
+    models.forEach((mod) => objs.push(mod));
     return objs.map((mod) => mod.toJSON());
   }
 }
