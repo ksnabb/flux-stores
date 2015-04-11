@@ -16,7 +16,7 @@ export class Collection extends EventEmitter {
     if (models !== undefined) {
       models.forEach((mod) => {
         let newModel = new this.Model(mod);
-        this.models.set(newModel.id, newModel);
+        this._add(newModel);
       });
     }
     this.length = this.models.size;
@@ -48,6 +48,9 @@ export class Collection extends EventEmitter {
       model.on("change:" + model.idAttribute, (m, oldValue) => {
         this.models.delete(oldValue);
         this.models.set(m.id, m);
+      });
+      model.on("all", (eventType, model, args) => {
+        this.trigger(eventType, model, args);
       });
       return true;
     }
