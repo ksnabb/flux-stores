@@ -78,7 +78,7 @@
     
     describe("on", function() {
       
-      it("should prpagate change events from the contained models", function() {
+      it("should propagate change events from the contained models", function() {
         var spy = sinon.spy();
         let col = new Collection([{
           "id": 1,
