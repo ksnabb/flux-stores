@@ -3,6 +3,7 @@
   var should = require("should");
   var Collection = require("..").Collection;
   var Model = require("..").Model;
+  var sinon = require("sinon");
   var _ = require("underscore");
 
   describe("Collection", function() {
@@ -71,6 +72,21 @@
           col.get(1).sayMyName().should.equal("my name");
         });
         
+      });
+      
+    });
+    
+    describe("on", function() {
+      
+      it("should prpagate change events from the contained models", function() {
+        var spy = sinon.spy();
+        let col = new Collection([{
+          "id": 1,
+          "value": 2
+        }]);
+        col.on("change:value", spy);
+        col.get(1).set({"value": 3});
+        spy.callCount.should.equal(1);
       });
       
     });
@@ -332,7 +348,7 @@
         }]);
         var res = col.findWhere({
           "name": "mike"
-        })
+        });
         res.get("name").should.equal("mike");
         res.get("id").should.equal(1);
       });

@@ -24,6 +24,14 @@ var Model = fluxStores.Model;
 var Collection = fluxStores.Collection;
 ```
 
+## Events
+
+`all`
+will receive all events triggered with the following parameters
+    
+    (eventType, args...)
+
+
 ## Models
 
 Create a Model

@@ -23,5 +23,10 @@ export class EventEmitter {
     if(listeners) {
       listeners.forEach( (fun) => fun.apply(this, args) );
     }
+    listeners = this.listeners.get("all");
+    if(listeners) {
+      args.unshift(eventType);
+      listeners.forEach( (fun) => fun.apply(this, args) );
+    }
   }
 }
