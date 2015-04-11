@@ -8,6 +8,9 @@ This library provides FLUX stores and is somewhat inspired by Backbone models an
 The library itself is written in es6 and compiled with babel which means you might have to
 include babel polyfill in your code to make it work in some browsers.
 
+If you cannot find what you want in this README, check out the 
+[test runs](https://github.com/ksnabb/flux-stores/blob/master/test.md), [the code](https://github.com/ksnabb/flux-stores/tree/master/src), [the chat](https://gitter.im/ksnabb/flux-stores) or [issues](https://github.com/ksnabb/flux-stores/issues).
+
 ### Installation
 
 To install simply run
