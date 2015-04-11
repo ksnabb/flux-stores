@@ -120,6 +120,21 @@ You can also pass in an array of objects that will be set to the collection.
 var col = new Collection([{"id": 1},{"id": 2}])
 ```
 
+`extend(extensionObject)`
+You can extend and override the default functions and params of the collection with extend.
+
+```js
+var MyCollectoin = Collection.extend({
+  Model: MyModel,
+  initialize: function() {
+    console.log("hey init");
+  },
+  justDoSomething: function() {
+    console.log("something");
+  }
+});
+```
+
 `add(objs) `
 add function adds the passed in js objects to the collection. If a
 model in the collection already contains another model with the same id they
