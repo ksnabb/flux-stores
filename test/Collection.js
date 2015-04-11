@@ -172,12 +172,12 @@
           "id": 3
         }]);
         let models = col.filter(function(m) {
-          return m.get("id") < 3
+          return m.get("id") < 3;
         });
         models.should.have.lengthOf(2);
         models.forEach(function(m) {
           m.get("id").should.be.below(3);
-        })
+        });
       });
 
       it("should return a sorted result according to set comparator function", function() {

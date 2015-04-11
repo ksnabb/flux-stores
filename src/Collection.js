@@ -12,12 +12,16 @@ export class Collection extends EventEmitter {
   constructor(models) {
     this.models = new Map();
     if (models !== undefined) {
-      models.forEach((mod) => this.models.set(mod[this.idAttribute], new Model(mod)));
+      models.forEach((mod) => {
+        let newModel = new Model(mod);
+        this.models.set(newModel.id, newModel);
+      });
     }
     this.length = this.models.size;
     if (this.initialize) {
       this.initialize.call(this, models);
     }
+    if(this.Model === undefined) this.Model = Model;
     this._nextId = 1;
     this._type = "Collection";
     super();
@@ -32,17 +36,17 @@ export class Collection extends EventEmitter {
   }
 
   _add(model) {
-    let oldModel = this.models.get(model.get(this.idAttribute));
+    let oldModel = this.models.get(model.id);
     if(oldModel) {
       oldModel.set(model.toJSON());
       return false;
     } else {
-      this.models.set(model.get(this.idAttribute), model);
+      this.models.set(model.id, model);
 
       // listen to id changes in model to sync it with collection id
-      model.on("change:id", (m, oldValue) => {
+      model.on("change:" + model.idAttribute, (m, oldValue) => {
         this.models.delete(oldValue);
-        this.models.set(m.get(this.idAttribute), m);
+        this.models.set(m.id, m);
       });
       return true;
     }
@@ -52,10 +56,6 @@ export class Collection extends EventEmitter {
     let addedModels = [];
     if(objs.constructor === Array) {
       objs.forEach((obj) => {
-        if(obj[this.idAttribute] === undefined) {
-          obj[this.idAttribute] = "c" + this._nextId;
-          this._nextId++;
-        }
         let newModel = new Model(obj);
         if(this._add(newModel)) addedModels.push(newModel);
       });
@@ -105,7 +105,7 @@ export class Collection extends EventEmitter {
   where(attributes) {
     let results = [];
     for(let key in attributes) {
-      if(key === this.idAttribute) {
+      if(key === this.Model.idAttribute) {
         results.push(this.models.get(attributes[key]));
         return results;
       } else if (results.length === 0) {
@@ -163,5 +163,3 @@ export class Collection extends EventEmitter {
     return objs.map((mod) => mod.toJSON());
   }
 }
-
-Collection.prototype.idAttribute = "id";

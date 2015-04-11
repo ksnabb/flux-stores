@@ -3,6 +3,8 @@ import {
 }
 from "./EventEmitter";
 
+var uniqueId = 0;
+
 export class Model extends EventEmitter {
   
   constructor(obj = {}) {
@@ -23,6 +25,12 @@ export class Model extends EventEmitter {
     });
     
     if(this.initialize) this.initialize();
+    if(this.idAttribute === undefined) this.idAttribute = "id";
+    this.id = this.arguments.get(this.idAttribute);
+    if(this.arguments.get(this.idAttribute) === undefined) {
+      this.id = "c" + uniqueId;
+      uniqueId++;
+    }
     
     this._type = "Model";
     super();
@@ -47,6 +55,9 @@ export class Model extends EventEmitter {
       if (newValue !== oldValue && values.hasOwnProperty(key)) {
         oldValues[key] = newValue;
         this.arguments.set(key, newValue);
+        if(key === this.idAttribute) {
+          this.id = newValue;
+        }
         if (!options.silent) {
           this.trigger(`change:${key}`, this, oldValue);
         }

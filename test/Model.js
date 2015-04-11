@@ -35,51 +35,81 @@
       dm.get("hello").should.equal("world");
     });
 
-    it("should trigger a change event after a property has changed", function() {
-      var m = new Model({
-        "value": 1,
-        "value2": "1"
+    describe("on", function() {
+      
+      it("should trigger a change event after a property has changed", function() {
+        var m = new Model({
+          "value": 1,
+          "value2": "1"
+        });
+        var spy = sinon.spy();
+        m.on("change", spy);
+        m.set({
+          "value": 2
+        });
+        m.set({
+          "value2": 1
+        });
+        spy.callCount.should.equal(2);
       });
-      var spy = sinon.spy();
-      m.on("change", spy);
-      m.set({
-        "value": 2
-      });
-      m.set({
-        "value2": 1
-      });
-      spy.callCount.should.equal(2);
-    });
 
-    it("should not trigger a chaange event if the value was not changed", function() {
-      var m = new Model({
-        "value": 2
+      it("should not trigger a change event if the value was not changed", function() {
+        var m = new Model({
+          "value": 2
+        });
+        var spy = sinon.spy();
+        m.on("change", spy);
+        m.set({
+          "value": 2
+        });
+        spy.callCount.should.equal(0);
       });
-      var spy = sinon.spy();
-      m.on("change", spy);
-      m.set({
-        "value": 2
-      });
-      spy.callCount.should.equal(0);
-    });
 
-    it("should trigger a change:<property name> event after the property has changed", function() {
-      var m = new Model({
-        "value": 1,
-        "value2": "1"
+      it("should trigger a change:<property name> event after the property has changed", function() {
+        var m = new Model({
+          "value": 1,
+          "value2": "1"
+        });
+        var valueSpy = sinon.spy();
+        m.on("change:value", valueSpy);
+        var value2Spy = sinon.spy();
+        m.on("change:value2", value2Spy);
+        m.set({
+          "value": 2
+        });
+        m.set({
+          "value2": 1
+        });
+        valueSpy.callCount.should.equal(1);
+        value2Spy.callCount.should.equal(1);
       });
-      var valueSpy = sinon.spy();
-      m.on("change:value", valueSpy);
-      var value2Spy = sinon.spy();
-      m.on("change:value2", value2Spy);
-      m.set({
-        "value": 2
+      
+    });
+    
+    describe("id and idAttribute", function() {
+      
+      it("should set the id of the model", function() {
+        var m = new Model({
+          "id": "hello"
+        });
+        m.id.should.equal("hello");
       });
-      m.set({
-        "value2": 1
+      
+      it("should set id of the model to the given idAttribute", function() {
+        var M = Model.extend({
+          "idAttribute": "unique"
+        });
+        var m = new M({
+          "unique": "hello"
+        });
+        m.id.should.equal("hello");
       });
-      valueSpy.callCount.should.equal(1);
-      value2Spy.callCount.should.equal(1);
+      
+      it("should assign a unique number as id if no id can be found", function() {
+        var m = new Model();
+        m.id.should.containEql('c');
+      });
+            
     });
     
     describe("initialize", function() {
