@@ -34,22 +34,45 @@
 
     });
 
-    describe("initialize", function() {
+    describe("extend", function() {
+      
+      describe("initialize", function() {
 
-      it("should be called when creating a new collection where the initialize function is set", function() {
-        var calledInitialize = false;
-        var InitializeCollection = Collection.extend({
-          initialize: function(objs) {
-            objs.length.should.equal(1);
-            objs[0].some.should.equal("model");
-            calledInitialize = true;
-          }
+        it("should be called when creating a new collection where the initialize function is set", function() {
+          var calledInitialize = false;
+          var InitializeCollection = Collection.extend({
+            initialize: function(objs) {
+              objs.length.should.equal(1);
+              objs[0].some.should.equal("model");
+              calledInitialize = true;
+            }
+          });
+          new InitializeCollection([{
+            "some": "model"
+          }]);
+          calledInitialize.should.be.true;
         });
-        new InitializeCollection([{
-          "some": "model"
-        }]);
-        calledInitialize.should.be.true;
       });
+      
+      describe("Model", function() {
+        
+        it("should be used as the class for the items in the collection", function() {
+          var M = Model.extend({
+            sayMyName: function() {
+              return "my name";
+            }
+          });
+          var C = Collection.extend({
+            Model: M
+          });
+          var col = new C([{
+            "id": 1
+          }]);
+          col.get(1).sayMyName().should.equal("my name");
+        });
+        
+      });
+      
     });
 
     describe("add", function() {
