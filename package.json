@@ -6,6 +6,7 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "mocha",
+    "doc": "mocha --reporter markdown > test.md",
     "cover": "istanbul cover _mocha",
     "clean": "rm -rf dist",
     "prepublish": "npm run build"
