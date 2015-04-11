@@ -36,7 +36,7 @@
     });
 
     describe("on", function() {
-      
+
       it("should trigger a change event after a property has changed", function() {
         var m = new Model({
           "value": 1,
@@ -83,18 +83,18 @@
         valueSpy.callCount.should.equal(1);
         value2Spy.callCount.should.equal(1);
       });
-      
+
     });
-    
+
     describe("id and idAttribute", function() {
-      
+
       it("should set the id of the model", function() {
         var m = new Model({
           "id": "hello"
         });
         m.id.should.equal("hello");
       });
-      
+
       it("should set id of the model to the given idAttribute", function() {
         var M = Model.extend({
           "idAttribute": "unique"
@@ -104,16 +104,16 @@
         });
         m.id.should.equal("hello");
       });
-      
-      it("should assign a unique number as id if no id can be found", function() {
+
+      it("should assign a unique number as id if no id can be found", function()  {
         var m = new Model();
         m.id.should.containEql('c');
       });
-            
+
     });
-    
+
     describe("initialize", function() {
-      
+
       it("should be called on model creation if it exists", function() {
         var spy = sinon.spy();
         var M = Model.extend({
@@ -133,6 +133,20 @@
         m.clear();
         m.toJSON().should.be.empty;
       });
+
+      it("should trigger a change event when clear is called", function() {
+        var m = new Model({
+          "age": "no age"
+        });
+        var changeSpy = sinon.spy();
+        var changeAttrSpy = sinon.spy();
+        m.on("change", changeSpy);
+        m.on("change:age", changeAttrSpy);
+        m.clear();
+        changeSpy.callCount.should.equal(1);
+        changeAttrSpy.callCount.should.equal(1);
+      });
+
     });
 
   });
