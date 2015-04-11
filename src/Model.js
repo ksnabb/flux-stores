@@ -6,7 +6,7 @@ from "./EventEmitter";
 var uniqueId = 0;
 
 export class Model extends EventEmitter {
-  
+
   constructor(obj = {}) {
     this.arguments = new Map();
 
@@ -23,15 +23,15 @@ export class Model extends EventEmitter {
     this.set(obj, {
       "silent": true
     });
-    
-    if(this.initialize) this.initialize();
-    if(this.idAttribute === undefined) this.idAttribute = "id";
+
+    if (this.initialize) this.initialize();
+    if (this.idAttribute === undefined) this.idAttribute = "id";
     this.id = this.arguments.get(this.idAttribute);
-    if(this.arguments.get(this.idAttribute) === undefined) {
+    if (this.arguments.get(this.idAttribute) === undefined) {
       this.id = "c" + uniqueId;
       uniqueId++;
     }
-    
+
     this._type = "Model";
     super();
   }
@@ -55,7 +55,7 @@ export class Model extends EventEmitter {
       if (newValue !== oldValue && values.hasOwnProperty(key)) {
         oldValues[key] = newValue;
         this.arguments.set(key, newValue);
-        if(key === this.idAttribute) {
+        if (key === this.idAttribute) {
           this.id = newValue;
         }
         if (!options.silent) {
@@ -72,9 +72,22 @@ export class Model extends EventEmitter {
   get(key) {
     return this.arguments.get(key);
   }
-  
+
   clear() {
+    let oldEntries = this.arguments.entries(),
+      oldValues = [],
+      hasChanged = false,
+      triggers = [];
+    for (let value of oldEntries) {
+      triggers.push(["change:" + value[0], this, value[1]]);
+      oldValues.push(value[1]);
+      hasChanged = true;
+    }
+    if (hasChanged) {
+      triggers.push(["change", this, oldValues]);
+    }
     this.arguments.clear();
+    triggers.forEach((triggerArgs) => this.trigger.apply(this, triggerArgs));
   }
 
   toJSON() {
