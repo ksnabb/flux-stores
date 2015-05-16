@@ -11,7 +11,7 @@
     describe("constructor", function() {
 
       it("should take js objects as arguments when creating a new collection", function() {
-        let col = new Collection([{
+        var col = new Collection([{
           "id": 1
         }, {
           "id": 2
@@ -20,11 +20,11 @@
       });
 
       it("should reflect model id changes to the collection keys", function() {
-        let m = new Model({
+        var m = new Model({
           "id": "one",
           "name": "micky"
         });
-        let col = new Collection();
+        var col = new Collection();
         col.add(m);
         col.get("one").get("name").should.equal("micky");
         col.get("one").set({
@@ -80,7 +80,7 @@
       
       it("should propagate change events from the contained models", function() {
         var spy = sinon.spy();
-        let col = new Collection([{
+        var col = new Collection([{
           "id": 1,
           "value": 2
         }]);
@@ -94,7 +94,7 @@
     describe("add", function() {
 
       it("should add js objects as models to the collection", function() {
-        let collection = new Collection();
+        var collection = new Collection();
         collection.add([{
           "id": 1,
           "hello": "world"
@@ -108,25 +108,25 @@
       });
 
       it("should add models as Model instances to the collection", function() {
-        let m = new Model({
+        var m = new Model({
           "id": "hello",
           "name": "model"
         });
-        let col = new Collection();
+        var col = new Collection();
         col.add(m);
         col.get("hello").get("name").should.equal("model");
       });
 
       it("should merge if a model with the same id is already found in the collection", function() {
-        let m1 = new Model({
+        var m1 = new Model({
           "id": "hello",
           "name": "model"
         });
-        let m2 = new Model({
+        var m2 = new Model({
           "id": "hello",
           "age": 30
         });
-        let col = new Collection();
+        var col = new Collection();
         col.add(m1);
         col.add(m2);
         col.get("hello").get("name").should.equal("model");
@@ -135,7 +135,7 @@
       });
 
       it("should trigger an add event with the added objects", function(done) {
-        let collection = new Collection();
+        var collection = new Collection();
         collection.on("add", function(addedObjects) {
           addedObjects.should.be.instanceof(Array).and.have.lengthOf(2);
           done();
@@ -148,7 +148,7 @@
       });
 
       it("should assign default id to models without id", function() {
-        let col = new Collection();
+        var col = new Collection();
         col.add([{
           "id": "one",
           "age": 12
@@ -167,33 +167,33 @@
     describe("toJSON", function() {
 
       it("should return js objects of all the containing models", function() {
-        let collection = new Collection();
-        let objs = [{
+        var collection = new Collection();
+        var objs = [{
           "id": 1
         }, {
           "id": 2
         }];
         collection.add(objs);
-        let jsObjs = collection.toJSON();
+        var jsObjs = collection.toJSON();
         _.isEqual(jsObjs, objs).should.be.true;
       });
     });
 
     describe("comparator", function() {
       it("should sort the returned js objects when added to a collection", function() {
-        let SortedCollection = Collection.extend({
+        var SortedCollection = Collection.extend({
           "comparator": function(modelA, modelB) {
             return modelA.get("hello").localeCompare(modelB.get("hello"));
           }
         });
-        let objs = [{
+        var objs = [{
           "id": 1,
           "hello": "something"
         }, {
           "id": 2,
           "hello": "world"
         }];
-        let col = new SortedCollection(objs),
+        var col = new SortedCollection(objs),
           jsObjs = col.toJSON();
         jsObjs[0].hello.should.equal("something");
         jsObjs[1].hello.should.equal("world");
@@ -203,14 +203,14 @@
     describe("filter", function() {
 
       it("should return an array of models that pass the filter function (returns true)", function() {
-        let col = new Collection([{
+        var col = new Collection([{
           "id": 1
         }, {
           "id": 2
         }, {
           "id": 3
         }]);
-        let models = col.filter(function(m) {
+        var models = col.filter(function(m) {
           return m.get("id") < 3;
         });
         models.should.have.lengthOf(2);
@@ -249,7 +249,7 @@
     describe("map", function() {
 
       it("should return an array of models that has been modified by the passed in function", function() {
-        let col = new Collection([{
+        var col = new Collection([{
           "id": 1,
           "wage": 1
         }, {
@@ -272,7 +272,7 @@
     describe("each", function() {
 
       it("should call the passed in function for each value in the collection", function() {
-        let col = new Collection([{
+        var col = new Collection([{
           "id": 1,
           "wage": 1
         }, {

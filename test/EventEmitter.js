@@ -15,10 +15,10 @@
 
       it("should register a listener to receive events of a certain type", function() {
         eventEmitter.listeners.has("click").should.be.false;
-        let listener = function() {};
+        var listener = function() {};
         eventEmitter.on("click", listener);
         eventEmitter.listeners.has("click").should.be.true;
-        let listeners = eventEmitter.listeners.get("click");
+        var listeners = eventEmitter.listeners.get("click");
         listeners.forEach(function(fun) {
           fun.should.equal(listener);
         });
@@ -28,7 +28,7 @@
     describe("off", function() {
 
       it("should remove a listener from the EventEmitter", function() {
-        let listener = function() {};
+        var listener = function() {};
         eventEmitter.on("click", listener);
         eventEmitter.listeners.has("click").should.be.true;
         eventEmitter.off("click", listener);
@@ -40,7 +40,7 @@
     describe("trigger", function() {
 
       it("should call all functions subscribed for a certain event type", function() {
-        let listener = function(message) {
+        var listener = function(message) {
           message.should.equal("hello world");
         };
         eventEmitter.on("helloWorlds", listener);
@@ -49,7 +49,7 @@
       });
       
       it("should trigger functions subscribed to all on all events", function() {
-        let spy = sinon.spy();
+        var spy = sinon.spy();
         eventEmitter.on("all", spy);
         eventEmitter.trigger("change");
         spy.callCount.should.equal(1);
