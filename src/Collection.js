@@ -10,6 +10,7 @@ from "./Model";
 export class Collection extends EventEmitter {
 
   constructor(models) {
+    super();
     if(this.Model === undefined) this.Model = Model;
     
     this.models = new Map();
@@ -25,7 +26,6 @@ export class Collection extends EventEmitter {
     }
     this._nextId = 1;
     this._type = "Collection";
-    super();
   }
 
   static extend(obj) {

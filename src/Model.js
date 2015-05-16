@@ -8,6 +8,7 @@ var uniqueId = 0;
 export class Model extends EventEmitter {
 
   constructor(obj = {}) {
+    super();
     this.arguments = new Map();
 
     if (typeof this.defaults === "object") {
@@ -33,7 +34,6 @@ export class Model extends EventEmitter {
     }
 
     this._type = "Model";
-    super();
   }
 
   static extend(obj) {
