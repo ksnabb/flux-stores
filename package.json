@@ -5,6 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "babel src --out-dir dist",
+    "build-browser-tests": "npm run build && browserify dist/main.js -o test/browser/flux-stores.js && browserify test/browser/main.js -o test/browser/flux-stores-tests.js",
     "test": "mocha",
     "doc": "mocha --reporter markdown > test.md",
     "cover": "istanbul cover _mocha",
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/ksnabb/flux-stores",
   "devDependencies": {
     "babel": "^5.4.3",
+    "browserify": "^10.2.0",
     "istanbul": "^0.3.13",
     "mocha": "^2.1.0",
     "should": "^5.0.1",
