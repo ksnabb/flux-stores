@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/ksnabb/flux-stores",
   "devDependencies": {
-    "babel": "^4.7.16",
+    "babel": "^5.4.3",
     "istanbul": "^0.3.13",
     "mocha": "^2.1.0",
     "should": "^5.0.1",
