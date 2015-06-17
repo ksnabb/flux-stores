@@ -109,6 +109,19 @@
         var m = new Model();
         m.id.should.containEql('c');
       });
+      
+      it("should replace and send a proper change event when automatically assiged id changes", function() {
+        var m = new Model();
+        var generatedId = m.id;
+        var idSpy = sinon.spy();
+        m.on("change:id", idSpy);
+        m.set({
+          "id": "unique db id"
+        });
+        idSpy.callCount.should.equal(1);
+        should.exist(idSpy.args[0][1]);
+        idSpy.args[0][1].should.eql(generatedId);
+      });
 
     });
 
