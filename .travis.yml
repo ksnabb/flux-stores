@@ -1,4 +1,4 @@
 language: node_js
 before_script: npm build
 node_js:
-  - "iojs"
+  - "node"
